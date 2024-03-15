@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <cmath>
 #include <ctime>
+#include <string>
 
 class Math {
 private:
@@ -9,6 +10,13 @@ private:
    double hipotenuse_result_class;
 
 public:
+   // 1. Конструкторы
+   Math()
+   {// Конструктор без параметров
+      first = 0;
+      second = 0;
+   }
+
    Math(double &first, double &second) 
    {// Конструктор с параметрами
       this->first = first;
@@ -21,40 +29,28 @@ public:
       second = b.second;
    }
 
-   Math()
-   {// Конструктор без параметров
-      first = 0;
-      second = 0;
-   }
-
+   // Деструктор
    ~Math()
    {// Деструктор
      
    }
 
-   inline void Set_first(double &first)
-   {// Cеттер для first 
+   // 3. Сеттеры
+   inline void Set_param(double &first, double &Second)
+   {// Cеттер для first и second
       this->first = first;
-   }
-
-   inline void Set_second(double& second)
-   {// Cеттер для second
       this->second = second;
    }
 
-   inline double Get_first() const
-   {// Геттер для first
-      return first;
-   }
-
-   inline double Set_second() const
-   {// Геттер для second
-      return second;
-   }
-
-   inline void Set_hipotenuse_result(double &hipotenuse_result)
+   inline void Set_hipotenuse_result(double& hipotenuse_result)
    {// Cеттер для hipotenuse_result
       this->hipotenuse_result_class = hipotenuse_result;
+   }
+
+   // 4. Геттеры
+   inline double Get_param() const
+   {// Геттер для first и second
+      return first, second;
    }
 
    inline double hipotenuse()
@@ -62,6 +58,7 @@ public:
       return sqrt(pow(first, 2) + pow(second, 2));
    }
 
+   // 5. Перегрузка операторов =, <<
    Math& operator=(const Math& other) 
    {// Перегрузка оператора присваивания
       if (this != &other) { // Проверка на самоприсваивание
@@ -71,38 +68,90 @@ public:
       return *this;
    }
 
-   inline void print(const Math &obj) const 
-   {
-      std::cout << obj.first << " " << obj.second;
-   }
-
    friend std::ostream& operator<<(std::ostream& out, const Math& other);
+
+   virtual void draw() const
+   {// Функция вывода данных на экран
+      std::cout << first << " " << second << std::endl;
+   }
 };
 
 std::ostream& operator<<(std::ostream& out, const Math& other)
-{
+{// Перегрухка оператор "<<"
    out << other.hipotenuse_result_class << std::endl;
    return out;
 }
+
+class Exam : public Math
+{// Дочерний класс от Math
+   double mark;
+   std::string FIO;
+   std::string predmet;
+
+public:
+   // 1. Конструкторы
+   Exam()
+   {// Конструктор без параметров
+      mark = 0;
+      FIO = "None";
+      predmet = "None";
+   }
+
+   Exam(double mark, std::string FIO, std::string predmet) 
+   {// Конструктор c параметрами
+      this->mark = mark;
+      this->FIO = FIO;
+      this->predmet = predmet;
+   }
+
+   // 2. Деструктор
+   ~Exam()
+   {// Деструктор
+
+   }
+
+   void draw() const override
+   {// Функция вывода данных на экран
+      std::cout << FIO << " " << predmet << " " << mark << std::endl;
+   }
+};
+
+void drawMath(const Math& obj)
+{// Функия подстановки
+   obj.draw();
+}
+
 
 
 int main()
 {
    srand(time(NULL));
-   Math test1; // Создание первого объекта вызов конструктора без параметров
+   // 1. Создание и вывод первого объекта
+   Math math_first; // Создание первого объекта вызов конструктора без параметров
+   std::cout << "Part 1" << std::endl << "Math first: ";
+   drawMath(math_first);
 
+   // 2. Создание и вывод полей второго объекта типа Math
    double first = rand() % 10;
-   std::cout << "First: " << first << std::endl;
    double second = rand() % 10;
-   std::cout << "Second: " << second << std::endl;
-   Math test2(first, second); //Создание и вызов конструктора с параметрами второго объекта
+   std::cout << "First: " << first << " " << "Second: " << second << std::endl;
+   Math math_second(first, second); //Создание и вызов конструктора с параметрами второго объекта
 
-   test1 = test2; // Пример перегрузки оператора присваивания
+   // 3. Демонстрирование перегрузки оператора =
+   math_first = math_second; // Пример перегрузки оператора присваивания
+   std::cout << "Math first: ";
+   drawMath(math_first);
 
-   // Поиск и вывод(с перегрузкой <<) гипотенузы
-   double hipotenuse_result_main = test2.hipotenuse();
-   test2.Set_hipotenuse_result(hipotenuse_result_main);
-   std::cout << "Hipotenuse: " << test2;
+   // 4. Поиск гипотенузы и демонстрация перегрузки оператора <<
+   auto hipotenuse_result_main = math_second.hipotenuse();
+   math_second.Set_hipotenuse_result(hipotenuse_result_main);
+   std::cout << "Hipotenuse: " << math_second;
+
+   // 5. Создание 3-го обекта типа Exam и демонстрация подстановки
+   std::cout << std::endl << std::endl << "Part 2" << std::endl;
+   double mark = 10.0;
+   Exam exam(mark ,"Daniil Kornach", "Math");
+   drawMath(exam);
 
    return 0;
-}
+  }
