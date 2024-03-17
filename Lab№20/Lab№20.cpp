@@ -5,28 +5,28 @@
 
 class Math {
 private:
-   double first;
-   double second;
+   double first_catheter;
+   double second_catheter;
    double hipotenuse_result_class;
 
 public:
    // 1. Конструкторы
    Math()
    {// Конструктор без параметров
-      first = 0;
-      second = 0;
+      first_catheter = 0;
+      second_catheter = 0;
    }
 
-   Math(double &first, double &second) 
+   Math(double &first_catheter, double &second_catheter) 
    {// Конструктор с параметрами
-      this->first = first;
-      this->second = second;
+      this->first_catheter = first_catheter;
+      this->second_catheter = second_catheter;
    }
 
    Math(const Math& b)
    {// Конструктор копирования
-      first = b.first;
-      second = b.second;
+      first_catheter = b.first_catheter;
+      second_catheter = b.second_catheter;
    }
 
    // Деструктор
@@ -36,10 +36,10 @@ public:
    }
 
    // 3. Сеттеры
-   inline void Set_param(double &first, double &Second)
-   {// Cеттер для first и second
-      this->first = first;
-      this->second = second;
+   inline void Set_param(double &first_catheter, double &second_catheter)
+   {// Cеттер для first_catheter и second_catheter
+      this->first_catheter = first_catheter;
+      this->second_catheter = second_catheter;
    }
 
    inline void Set_hipotenuse_result(double& hipotenuse_result)
@@ -49,21 +49,21 @@ public:
 
    // 4. Геттеры
    inline double Get_param() const
-   {// Геттер для first и second
-      return first, second;
+   {// Геттер для first_catheter и second_catheter
+      return first_catheter, second_catheter;
    }
 
    inline double hipotenuse()
    {// Метод для нахождения гипотинузы
-      return sqrt(pow(first, 2) + pow(second, 2));
+      return sqrt(pow(first_catheter, 2) + pow(second_catheter, 2));
    }
 
    // 5. Перегрузка операторов =, <<
    Math& operator=(const Math& other) 
    {// Перегрузка оператора присваивания
       if (this != &other) { // Проверка на самоприсваивание
-         first = other.first;
-         second = other.second;
+         first_catheter = other.first_catheter;
+         second_catheter = other.second_catheter;
       }
       return *this;
    }
@@ -72,7 +72,7 @@ public:
 
    virtual void draw() const
    {// Функция вывода данных на экран
-      std::cout << first << " " << second << std::endl;
+      std::cout << first_catheter << " " << second_catheter << std::endl;
    }
 };
 
@@ -132,10 +132,10 @@ int main()
    drawMath(math_first);
 
    // 2. Создание и вывод полей второго объекта типа Math
-   double first = rand() % 10;
-   double second = rand() % 10;
-   std::cout << "First: " << first << " " << "Second: " << second << std::endl;
-   Math math_second(first, second); //Создание и вызов конструктора с параметрами второго объекта
+   double first_catheter = rand() % 10;
+   double second_catheter = rand() % 10;
+   std::cout << "First catheter: " << first_catheter << " " << "Second catheter: " << second_catheter << std::endl;
+   Math math_second(first_catheter, second_catheter); //Создание и вызов конструктора с параметрами второго объекта
 
    // 3. Демонстрирование перегрузки оператора =
    math_first = math_second; // Пример перегрузки оператора присваивания
