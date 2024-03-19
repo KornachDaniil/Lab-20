@@ -32,7 +32,7 @@ public:
    // Деструктор
    ~Math()
    {// Деструктор
-     
+      std::cout << "\nDeleted\n";
    }
 
    // 3. Сеттеры
@@ -104,15 +104,15 @@ public:
       this->predmet = predmet;
    }
 
-   // 2. Деструктор
-   ~Exam()
-   {// Деструктор
-
-   }
+   //// 2. Деструктор
+   //~Exam()
+   //{// Деструктор
+   //   std::cout << "\nDeleted\n";
+   //}
 
    void draw() const override
    {// Функция вывода данных на экран
-      std::cout << FIO << " " << predmet << " " << mark << std::endl;
+      std::cout << FIO << ", " << predmet << ", " << mark << std::endl;
    }
 };
 
@@ -134,6 +134,8 @@ int main()
    // 2. Создание и вывод полей второго объекта типа Math
    double first_catheter = rand() % 10;
    double second_catheter = rand() % 10;
+   if (first_catheter < 0 || second_catheter < 0)
+      return -1;
    std::cout << "First catheter: " << first_catheter << " " << "Second catheter: " << second_catheter << std::endl;
    Math math_second(first_catheter, second_catheter); //Создание и вызов конструктора с параметрами второго объекта
 
